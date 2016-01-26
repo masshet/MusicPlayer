@@ -11,10 +11,17 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,47 +31,68 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
+
+import by.mrstark.mp3playerdemo.fragment.ListenNowFragment;
 
 /**
  * Created by mrstark on 22.1.16.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private static final String FILE_NAME = "01 Не с начала.mp3";
     final String LOG_TAG = "myLogs";
 
-    FloatingActionButton play;
-    FloatingActionButton pause;
-    TextView artist;
-    TextView song;
-    TextView album;
-    ImageView albumArt;
-    private MediaPlayer player;
-    private MediaMetadataRetriever retriever;
+    private ListenNowFragment listenNowFragment;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
+    private Toolbar toolbar;
+    private DrawerLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        play = (FloatingActionButton) findViewById(R.id.fab_play);
-        pause = (FloatingActionButton) findViewById(R.id.fab_pause);
-        artist = (TextView) findViewById(R.id.artist);
-        song = (TextView) findViewById(R.id.song);
-        album = (TextView) findViewById(R.id.album);
-        albumArt = (ImageView) findViewById(R.id.album_art);
+        manager = getSupportFragmentManager();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        } else {
+        listenNowFragment = new ListenNowFragment();
+
+        initToolbar();
+        initNavigationView();
+
+        loadFragment();
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+//        } else {
 
 //            ArrayList<File> list = findSongs(Environment.getExternalStorageDirectory());
-        }
+//        }
     }
 
-    public void initPlayer() {
+    public void loadFragment() {
+        transaction = manager.beginTransaction();
+        transaction.add(R.id.container, listenNowFragment);
+        transaction.commit();
+    }
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+    }
+
+    private void initNavigationView() {
+        layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, layout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
+        layout.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+/*    public void initPlayer() {
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         String path = Environment.getExternalStorageDirectory().getPath() + "/" + FILE_NAME;
@@ -85,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<File> findSongs(File root) {
+    private List<File> findSongs(File root) {
         ArrayList<File> songs = new ArrayList<>();
         File[] files = root.listFiles();
         if (files != null) {
@@ -117,5 +145,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Playing " + player.isPlaying());
         pause.hide();
         play.show();
-    }
+    }*/
 }

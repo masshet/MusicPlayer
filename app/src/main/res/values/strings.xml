@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Mp3PlayerDemo</string>
+    <string name="view_navigation_open">Open</string>
+    <string name="view_navigation_close">Close</string>
 </resources>
