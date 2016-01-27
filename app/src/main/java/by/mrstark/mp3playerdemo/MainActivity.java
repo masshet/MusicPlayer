@@ -1,51 +1,30 @@
 package by.mrstark.mp3playerdemo;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.AudioManager;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
+import android.view.MenuItem;
 
 import by.mrstark.mp3playerdemo.fragment.ListenNowFragment;
+import by.mrstark.mp3playerdemo.fragment.MyLibraryFragment;
 
 /**
  * Created by mrstark on 22.1.16.
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String FILE_NAME = "01 Не с начала.mp3";
     final String LOG_TAG = "myLogs";
 
     private ListenNowFragment listenNowFragment;
+    private MyLibraryFragment myLibraryFragment;
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private Toolbar toolbar;
@@ -59,6 +38,7 @@ public class MainActivity extends FragmentActivity {
         manager = getSupportFragmentManager();
 
         listenNowFragment = new ListenNowFragment();
+        myLibraryFragment = new MyLibraryFragment();
 
         initToolbar();
         initNavigationView();
@@ -81,7 +61,13 @@ public class MainActivity extends FragmentActivity {
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitle(R.string.listen_now);
+    }
+
+    public void changeFragment(Fragment fragment) {
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.commit();
     }
 
     private void initNavigationView() {
@@ -90,6 +76,26 @@ public class MainActivity extends FragmentActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, layout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
         layout.setDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                layout.closeDrawers();
+                switch (item.getItemId()) {
+                    case R.id.listen_now_menu_item:
+                        toolbar.setTitle(R.string.listen_now);
+                        changeFragment(listenNowFragment);
+                        break;
+                    case R.id.my_library_menu_item:
+                        toolbar.setTitle(R.string.my_library);
+                        changeFragment(myLibraryFragment);
+                        break;
+                }
+                return true;
+            }
+        });
+
     }
 
 /*    public void initPlayer() {

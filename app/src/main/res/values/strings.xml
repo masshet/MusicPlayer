@@ -2,4 +2,13 @@
     <string name="app_name">Mp3PlayerDemo</string>
     <string name="view_navigation_open">Open</string>
     <string name="view_navigation_close">Close</string>
+
+    <string name="listen_now">Listen Now</string>
+    <string name="my_library">My Library</string>
+
+    <string name="tab_item_playlists">Playlists</string>
+    <string name="tab_item_genres">Genres</string>
+    <string name="tab_item_artists">Artists</string>
+    <string name="tab_item_albums">Albums</string>
+    <string name="tab_item_songs">Songs</string>
 </resources>
