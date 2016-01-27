@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.listen_now);
+        toolbar.inflateMenu(R.menu.menu);
     }
 
     public void changeFragment(Fragment fragment) {
