@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import by.mrstark.mp3playerdemo.fragment.AboutFragment;
 import by.mrstark.mp3playerdemo.fragment.ListenNowFragment;
 import by.mrstark.mp3playerdemo.fragment.MyLibraryFragment;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListenNowFragment listenNowFragment;
     private MyLibraryFragment myLibraryFragment;
+    private AboutFragment aboutFragment;
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private Toolbar toolbar;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         listenNowFragment = new ListenNowFragment();
         myLibraryFragment = new MyLibraryFragment();
+        aboutFragment = new AboutFragment();
 
         initToolbar();
         initNavigationView();
@@ -91,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.my_library_menu_item:
                         toolbar.setTitle(R.string.my_library);
                         changeFragment(myLibraryFragment);
+                        break;
+                    case R.id.about_menu_item:
+                        toolbar.setTitle(R.string.about);
+                        changeFragment(aboutFragment);
                         break;
                 }
                 return true;

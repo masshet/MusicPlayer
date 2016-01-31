@@ -13,4 +13,10 @@
         android:orderInCategory="2"
         android:icon="@drawable/library_music"/>
 
+    <item
+        android:id="@+id/about_menu_item"
+        android:icon="@drawable/information"
+        android:title="@string/about"
+        android:orderInCategory="3"/>
+
 </menu>
