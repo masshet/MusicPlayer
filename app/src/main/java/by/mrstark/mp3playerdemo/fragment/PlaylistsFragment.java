@@ -14,7 +14,7 @@ import by.mrstark.mp3playerdemo.R;
  */
 public class PlaylistsFragment extends AbstractTabFragment {
 
-    private static final int LAYOUT = R.layout.fragment_example;
+    private static final int LAYOUT = R.layout.playlists_fragment;
 
     public static PlaylistsFragment getInstance(Context context) {
         PlaylistsFragment fragment = new PlaylistsFragment();
