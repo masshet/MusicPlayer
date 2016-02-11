@@ -1,6 +1,12 @@
 package by.mrstark.mp3playerdemo;
 
+import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,7 +16,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import by.mrstark.mp3playerdemo.fragment.AboutFragment;
 import by.mrstark.mp3playerdemo.fragment.ListenNowFragment;
@@ -39,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         manager = getSupportFragmentManager();
 
-        listenNowFragment = new ListenNowFragment();
-        myLibraryFragment = new MyLibraryFragment();
-        aboutFragment = new AboutFragment();
+        listenNowFragment = ListenNowFragment.getInstance(this);
+        myLibraryFragment = MyLibraryFragment.getInstance(this);
+        aboutFragment = AboutFragment.getInstance(this);
 
         initToolbar();
         initNavigationView();
@@ -58,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadFragment() {
         transaction = manager.beginTransaction();
-        transaction.add(R.id.container, listenNowFragment);
+        transaction.add(R.id.container, myLibraryFragment);
         transaction.commit();
     }
 
@@ -106,16 +118,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-/*    public void initPlayer() {
-        player = new MediaPlayer();
+    public void initPlayer() {
+        MediaPlayer player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         String path = Environment.getExternalStorageDirectory().getPath() + "/" + FILE_NAME;
-        retriever = new MediaMetadataRetriever();
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(path);
-        artist.setText(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-        song.setText(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-        album.setText(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
-        albumArt.setImageBitmap(BitmapFactory.decodeByteArray(retriever.getEmbeddedPicture(), 0, retriever.getEmbeddedPicture().length));
+        String artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+        String song = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        String album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        byte[] albumArt = retriever.getEmbeddedPicture();
         Log.d(LOG_TAG, "Playing " + path);
         try {
             player.setDataSource(this, Uri.parse(path));
@@ -127,37 +139,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<File> findSongs(File root) {
-        ArrayList<File> songs = new ArrayList<>();
-        File[] files = root.listFiles();
-        if (files != null) {
-            for(File file : files) {
-                if (file.isDirectory() && !file.isHidden()) {
-                    songs.addAll(findSongs(file));
-                } else {
-                    if (file.getName().endsWith(".mp3")) {
-                        songs.add(file);
-                    }
-                }
-            }
-        } else {
-            Log.d(LOG_TAG, "Null");
-        }
-        return songs;
-    }
 
-    public void onClickPlay(View view) {
-        initPlayer();
-        player.start();
-        Log.d(LOG_TAG, "Playing " + player.isPlaying());
-        play.hide();
-        pause.show();
-    }
-
-    public void onClickPause(View view) {
-        player.pause();
-        Log.d(LOG_TAG, "Playing " + player.isPlaying());
-        pause.hide();
-        play.show();
-    }*/
 }

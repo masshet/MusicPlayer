@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import by.mrstark.mp3playerdemo.entity.Song;
 import by.mrstark.mp3playerdemo.fragment.AbstractTabFragment;
 import by.mrstark.mp3playerdemo.fragment.AlbumsFragment;
 import by.mrstark.mp3playerdemo.fragment.ArtistsFragment;
@@ -22,10 +25,12 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
 
     private Map<Integer, AbstractTabFragment> map;
     private Context context;
+    private ArrayList<Song> songs;
 
-    public TabsFragmentAdapter(Context context, FragmentManager fm) {
+    public TabsFragmentAdapter(Context context, FragmentManager fm, ArrayList<Song> songs) {
         super(fm);
         this.context = context;
+        this.songs = songs;
         initTabsMap();
     }
 
@@ -50,6 +55,6 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
         map.put(1, GenresFragment.getInstance(context));
         map.put(2, ArtistsFragment.getInstance(context));
         map.put(3, AlbumsFragment.getInstance(context));
-        map.put(4, SongsFragment.getInstance(context));
+        map.put(4, SongsFragment.getInstance(context, songs));
     }
 }

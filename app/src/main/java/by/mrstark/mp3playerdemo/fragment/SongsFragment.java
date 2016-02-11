@@ -6,18 +6,32 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import by.mrstark.mp3playerdemo.R;
+import by.mrstark.mp3playerdemo.adapter.SongsListAdapter;
+import by.mrstark.mp3playerdemo.entity.Song;
 
 /**
  * Created by mrstark on 27.1.16.
  */
 public class SongsFragment extends AbstractTabFragment {
 
-    private static final int LAYOUT = R.layout.fragment_example;
+    private static final int LAYOUT = R.layout.songs_fragment;
 
-    public static SongsFragment getInstance(Context context) {
-        SongsFragment fragment = new SongsFragment();
+    private ListView listView;
+    private ArrayList<Song> songs;
+
+    private SongsFragment(ArrayList<Song> songs) {
+        this.songs = songs;
+    }
+
+    public static SongsFragment getInstance(Context context, ArrayList<Song> songs) {
+        SongsFragment fragment = new SongsFragment(songs);
         fragment.setContext(context);
         fragment.setTitle(context.getString(R.string.tab_item_songs));
         return fragment;
@@ -26,7 +40,11 @@ public class SongsFragment extends AbstractTabFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(LAYOUT, container, false);
+        View root = inflater.inflate(LAYOUT, container, false);
+        listView = (ListView) root.findViewById(R.id.song_list);
+        SongsListAdapter adapter = new SongsListAdapter(getActivity().getApplicationContext(), songs);
+        listView.setAdapter(adapter);
+        return root;
     }
 
     public void setContext(Context context) {
