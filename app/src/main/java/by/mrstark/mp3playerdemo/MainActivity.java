@@ -117,27 +117,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-    public void initPlayer() {
-        MediaPlayer player = new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        String path = Environment.getExternalStorageDirectory().getPath() + "/" + FILE_NAME;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(path);
-        String artist = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-        String song = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-        String album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-        byte[] albumArt = retriever.getEmbeddedPicture();
-        Log.d(LOG_TAG, "Playing " + path);
-        try {
-            player.setDataSource(this, Uri.parse(path));
-            player.setLooping(true);
-            player.prepare();
-        } catch (IOException e) {
-            Log.d(LOG_TAG, e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-
 }

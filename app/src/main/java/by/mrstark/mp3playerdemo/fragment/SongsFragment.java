@@ -1,11 +1,14 @@
 package by.mrstark.mp3playerdemo.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -13,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.mrstark.mp3playerdemo.R;
+import by.mrstark.mp3playerdemo.activity.PlayActivity;
 import by.mrstark.mp3playerdemo.adapter.SongsListAdapter;
+import by.mrstark.mp3playerdemo.entity.PlaylistForPlaying;
 import by.mrstark.mp3playerdemo.entity.Song;
 
 /**
@@ -44,6 +49,16 @@ public class SongsFragment extends AbstractTabFragment {
         listView = (ListView) root.findViewById(R.id.song_list);
         SongsListAdapter adapter = new SongsListAdapter(getActivity().getApplicationContext(), songs);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PlaylistForPlaying playlistForPlaying = PlaylistForPlaying.getInstance();
+                playlistForPlaying.setSongs(songs);
+                Intent intent = new Intent(getActivity().getApplicationContext(), PlayActivity.class);
+                intent.putExtra("id", position);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
