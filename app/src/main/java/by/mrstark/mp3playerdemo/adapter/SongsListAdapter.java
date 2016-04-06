@@ -22,9 +22,9 @@ public class SongsListAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    ArrayList<Song> songs;
+    private List<Song> songs;
 
-    public SongsListAdapter(Context context, ArrayList<Song> songs) {
+    public SongsListAdapter(Context context, List<Song> songs) {
         this.context = context;
         this.songs = songs;
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -1,13 +1,13 @@
 package by.mrstark.mp3playerdemo.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mrstark on 15.2.16.
  */
 public class PlaylistForPlaying {
 
-    private ArrayList<Song> songs;
+    private List<Song> songs;
     private static PlaylistForPlaying instance;
 
 
@@ -20,11 +20,11 @@ public class PlaylistForPlaying {
         return instance;
     }
 
-    public void setSongs(ArrayList<Song> songs) {
+    public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
 
-    public ArrayList<Song> getSongs() {
+    public List<Song> getSongs() {
         return songs;
     }
 }

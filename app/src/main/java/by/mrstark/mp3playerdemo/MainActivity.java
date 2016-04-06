@@ -33,7 +33,6 @@ import by.mrstark.mp3playerdemo.fragment.MyLibraryFragment;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String FILE_NAME = "01 Не с начала.mp3";
     final String LOG_TAG = "myLogs";
 
     private ListenNowFragment listenNowFragment;
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.listen_now);
+        toolbar.setTitle(R.string.my_library);
         toolbar.inflateMenu(R.menu.menu);
     }
 

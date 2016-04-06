@@ -29,13 +29,13 @@ public class SongsFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.songs_fragment;
 
     private ListView listView;
-    private ArrayList<Song> songs;
+    private List<Song> songs;
 
-    private SongsFragment(ArrayList<Song> songs) {
+    private SongsFragment(List<Song> songs) {
         this.songs = songs;
     }
 
-    public static SongsFragment getInstance(Context context, ArrayList<Song> songs) {
+    public static SongsFragment getInstance(Context context, List<Song> songs) {
         SongsFragment fragment = new SongsFragment(songs);
         fragment.setContext(context);
         fragment.setTitle(context.getString(R.string.tab_item_songs));

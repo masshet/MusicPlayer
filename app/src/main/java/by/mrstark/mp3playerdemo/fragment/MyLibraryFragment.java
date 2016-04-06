@@ -21,6 +21,7 @@ import java.util.List;
 import by.mrstark.mp3playerdemo.R;
 import by.mrstark.mp3playerdemo.adapter.TabsFragmentAdapter;
 import by.mrstark.mp3playerdemo.constant.SystemDirectoryList;
+import by.mrstark.mp3playerdemo.entity.Album;
 import by.mrstark.mp3playerdemo.entity.Song;
 
 /**
@@ -33,7 +34,8 @@ public class MyLibraryFragment extends AbstractNavigationFragment {
 
     private ViewPager viewPager;
     private View root;
-    private ArrayList<Song> songs;
+    private List<Song> songs;
+    private List<Album> albums;
 
     public static MyLibraryFragment getInstance(Context context) {
         MyLibraryFragment fragment = new MyLibraryFragment();
@@ -47,6 +49,7 @@ public class MyLibraryFragment extends AbstractNavigationFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(LAYOUT, container, false);
         setSongs(findSongs(Environment.getExternalStorageDirectory()));
+        setAlbums(songs);
         initTabs();
         return root;
     }
@@ -58,9 +61,13 @@ public class MyLibraryFragment extends AbstractNavigationFragment {
         }
     }
 
+    private void setAlbums(List<Song> songs) {
+        albums = new ArrayList<>();
+    }
+
     private void initTabs() {
         viewPager = (ViewPager) root.findViewById(R.id.view_pager);
-        TabsFragmentAdapter adapter = new TabsFragmentAdapter(getContext(), getActivity().getSupportFragmentManager(), songs);
+        TabsFragmentAdapter adapter = new TabsFragmentAdapter(getContext(), getActivity().getSupportFragmentManager(), songs, albums);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
