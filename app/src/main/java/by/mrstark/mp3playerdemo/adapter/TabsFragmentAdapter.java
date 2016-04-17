@@ -1,9 +1,9 @@
 package by.mrstark.mp3playerdemo.adapter;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,11 +29,9 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
     private List<Song> songs;
     private List<Album> albums;
 
-    public TabsFragmentAdapter(Context context, FragmentManager fm, List<Song> songs, List<Album> albums) {
+    public TabsFragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
-        this.songs = songs;
-        this.albums = albums;
         initTabsMap();
     }
 
@@ -57,7 +55,7 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
         map.put(0, PlaylistsFragment.getInstance(context));
         map.put(1, GenresFragment.getInstance(context));
         map.put(2, ArtistsFragment.getInstance(context));
-        map.put(3, AlbumsFragment.Companion.getInstance(context, albums));
-        map.put(4, SongsFragment.getInstance(context, songs));
+        map.put(3, AlbumsFragment.Companion.getInstance(context));
+        map.put(4, SongsFragment.getInstance(context));
     }
 }

@@ -14,7 +14,7 @@ import by.mrstark.mp3playerdemo.R;
  */
 public class AboutFragment extends AbstractNavigationFragment {
 
-    private static final int LAYOUT = R.layout.about_fragment;
+    private static final int LAYOUT = R.layout.fragment_about;
 
     public static AboutFragment getInstance(Context context) {
         AboutFragment fragment = new AboutFragment();

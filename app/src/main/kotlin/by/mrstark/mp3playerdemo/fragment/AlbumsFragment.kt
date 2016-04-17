@@ -13,7 +13,7 @@ import java.util.*
 /**
  * Created by mrstark on 27.1.16.
  */
-class AlbumsFragment(val albums: List<Album>) : AbstractTabFragment() {
+class AlbumsFragment() : AbstractTabFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater?.inflate(LAYOUT, container, false)
@@ -28,8 +28,8 @@ class AlbumsFragment(val albums: List<Album>) : AbstractTabFragment() {
 
         private val LAYOUT = R.layout.fragment_example
 
-        fun getInstance(context: Context, albums: List<Album>): AlbumsFragment {
-            val fragment = AlbumsFragment(albums)
+        fun getInstance(context: Context): AlbumsFragment {
+            val fragment = AlbumsFragment()
             fragment.setContext(context)
             fragment.title = context.getString(R.string.tab_item_albums)
             return fragment

@@ -1,18 +1,18 @@
 package by.mrstark.mp3playerdemo.fragment;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.method.CharacterPickerDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.mrstark.mp3playerdemo.R;
@@ -20,24 +20,19 @@ import by.mrstark.mp3playerdemo.activity.PlayActivity;
 import by.mrstark.mp3playerdemo.adapter.SongsListAdapter;
 import by.mrstark.mp3playerdemo.entity.PlaylistForPlaying;
 import by.mrstark.mp3playerdemo.entity.Song;
+import by.mrstark.mp3playerdemo.util.DataUtil;
 
 /**
  * Created by mrstark on 27.1.16.
  */
 public class SongsFragment extends AbstractTabFragment {
 
-    private static final int LAYOUT = R.layout.songs_fragment;
-
-    private ListView listView;
-    private List<Song> songs;
-
-    private SongsFragment(List<Song> songs) {
-        this.songs = songs;
+    public interface OnSongSelectedinterface {
+        void onListSongSelected(int index);
     }
 
-    public static SongsFragment getInstance(Context context, List<Song> songs) {
-        SongsFragment fragment = new SongsFragment(songs);
-        fragment.setContext(context);
+    public static SongsFragment getInstance(Context context) {
+        SongsFragment fragment = new SongsFragment();
         fragment.setTitle(context.getString(R.string.tab_item_songs));
         return fragment;
     }
@@ -45,25 +40,15 @@ public class SongsFragment extends AbstractTabFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(LAYOUT, container, false);
-        listView = (ListView) root.findViewById(R.id.song_list);
-        SongsListAdapter adapter = new SongsListAdapter(getActivity().getApplicationContext(), songs);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PlaylistForPlaying playlistForPlaying = PlaylistForPlaying.getInstance();
-                playlistForPlaying.setSongs(songs);
-                Intent intent = new Intent(getActivity().getApplicationContext(), PlayActivity.class);
-                intent.putExtra("id", position);
-                startActivity(intent);
-            }
-        });
+        OnSongSelectedinterface listener = (OnSongSelectedinterface) getActivity();
+        View root = inflater.inflate(R.layout.fragment_songs, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.songRecycleView);
+        SongsListAdapter songsListAdapter = new SongsListAdapter(listener);
+        recyclerView.setAdapter(songsListAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
         return root;
     }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
 }
