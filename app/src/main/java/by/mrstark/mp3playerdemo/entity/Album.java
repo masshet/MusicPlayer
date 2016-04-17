@@ -1,5 +1,6 @@
 package by.mrstark.mp3playerdemo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,14 @@ public class Album {
     public Album(String artist, String name) {
         this.artist = artist;
         this.name = name;
+        this.songsList = new ArrayList<>();
+    }
+
+    public byte[] getAlbumArt() {
+        if (getSongsList().get(0).getAlbumArt() != null) {
+            return getSongsList().get(0).getAlbumArt();
+        }
+        return new byte[]{};
     }
 
     public void addSong(Song song) {
@@ -42,5 +51,17 @@ public class Album {
 
     public void setSongsList(List<Song> songsList) {
         this.songsList = songsList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Album) {
+            if (this.getArtist().equals(((Album) o).getArtist()) && this.getName().equals(((Album) o).getName())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 }

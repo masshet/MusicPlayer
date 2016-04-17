@@ -2,24 +2,15 @@ package by.mrstark.mp3playerdemo.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import by.mrstark.mp3playerdemo.R;
 import by.mrstark.mp3playerdemo.adapter.TabsFragmentAdapter;
-import by.mrstark.mp3playerdemo.constant.SystemDirectoryList;
-import by.mrstark.mp3playerdemo.entity.Album;
-import by.mrstark.mp3playerdemo.entity.Song;
 
 /**
  * Created by mrstark on 27.1.16.
@@ -27,7 +18,6 @@ import by.mrstark.mp3playerdemo.entity.Song;
 public class MyLibraryFragment extends AbstractNavigationFragment {
 
     private static final int LAYOUT = R.layout.fragment_my_library;
-    final String LOG_TAG = "myLogs";
 
     private ViewPager viewPager;
     private View root;
@@ -49,7 +39,7 @@ public class MyLibraryFragment extends AbstractNavigationFragment {
 
     private void initTabs() {
         viewPager = (ViewPager) root.findViewById(R.id.view_pager);
-        TabsFragmentAdapter adapter = new TabsFragmentAdapter(getContext(), getActivity().getFragmentManager());
+        TabsFragmentAdapter adapter = new TabsFragmentAdapter(getContext(), getChildFragmentManager());
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
@@ -65,4 +55,6 @@ public class MyLibraryFragment extends AbstractNavigationFragment {
     public void showSongsTab() {
         viewPager.setCurrentItem(4);
     }
+
+
 }

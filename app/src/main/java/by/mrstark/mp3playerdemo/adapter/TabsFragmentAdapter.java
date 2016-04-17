@@ -55,7 +55,7 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
         map.put(0, PlaylistsFragment.getInstance(context));
         map.put(1, GenresFragment.getInstance(context));
         map.put(2, ArtistsFragment.getInstance(context));
-        map.put(3, AlbumsFragment.Companion.getInstance(context));
+        map.put(3, AlbumsFragment.getInstance(context));
         map.put(4, SongsFragment.getInstance(context));
     }
 }

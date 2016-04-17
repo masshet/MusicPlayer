@@ -10,8 +10,6 @@ import java.io.File;
  */
 public class Song {
 
-    private String LOG_TAG = "myLog";
-
     private String title;
     private String artist;
     private String album;
@@ -21,7 +19,6 @@ public class Song {
 
     public Song(File file) {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        Log.d(LOG_TAG, file.getAbsolutePath());
         retriever.setDataSource(file.getAbsolutePath());
         setTitle(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
         setArtist(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));

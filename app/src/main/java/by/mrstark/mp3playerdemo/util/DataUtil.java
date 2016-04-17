@@ -34,17 +34,64 @@ public class DataUtil {
     private DataUtil() {
         setSongs(findSongs(Environment.getExternalStorageDirectory()));
         setAlbums();
-        setArtists();
+//        setArtists();
     }
 
     public List<Song> getSongs() {
         return songs;
     }
 
-    private void setAlbums() {
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
     }
 
     private void setArtists() {
+        artists = new ArrayList<>();
+        for (Album album : albums) {
+            if (artists.contains(new Artist(album.getArtist()))) {
+                for (Artist artist : artists) {
+                    if (artist.getName().equals(album.getArtist())) {
+                        artist.addAlbum(album);
+                    }
+                }
+            } else {
+                artists.add(createArtistWithOneAlbum(album));
+            }
+        }
+    }
+
+    private Artist createArtistWithOneAlbum(Album album) {
+        Artist artist = new Artist(album.getArtist());
+        Log.d(LOG_TAG, album.getArtist());
+        artist.addAlbum(album);
+        return artist;
+    }
+
+    private void setAlbums() {
+        albums = new ArrayList<>();
+        for (Song song : songs) {
+            if (song.getAlbum().length() != 0) {
+                if (albums.contains(new Album(song.getArtist(), song.getAlbum()))) {
+                    for (Album album : albums) {
+                        if (album.getName().equals(song.getAlbum()) && album.getArtist().equals(song.getArtist())) {
+                            album.addSong(song);
+                        }
+                    }
+                } else {
+                    albums.add(createAlbumWithOneSong(song));
+                }
+            }
+        }
+    }
+
+    private Album createAlbumWithOneSong(Song song) {
+        Album album = new Album(song.getArtist(), song.getAlbum());
+        album.addSong(song);
+        return album;
     }
 
     private void setSongs(List<File> files) {

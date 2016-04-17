@@ -6,15 +6,15 @@
 
     <ImageView
         android:layout_margin="10dp"
-        android:id="@+id/item_album_art"
+        android:id="@+id/item_art"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:layout_marginTop="10dp"
-        android:id="@+id/item_song_title"
-        android:layout_toEndOf="@+id/item_album_art"
+        android:id="@+id/item_title"
+        android:layout_toEndOf="@+id/item_art"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
@@ -24,9 +24,9 @@
 
     <TextView
         android:layout_marginTop="5dp"
-        android:id="@+id/item_song_artist"
-        android:layout_toEndOf="@+id/item_album_art"
-        android:layout_below="@+id/item_song_title"
+        android:id="@+id/item_artist"
+        android:layout_toEndOf="@+id/item_art"
+        android:layout_below="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"

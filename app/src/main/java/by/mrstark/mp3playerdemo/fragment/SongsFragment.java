@@ -37,18 +37,9 @@ public class SongsFragment extends AbstractTabFragment {
         return fragment;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public RecyclerView.Adapter getAdapter() {
         OnSongSelectedinterface listener = (OnSongSelectedinterface) getActivity();
-        View root = inflater.inflate(R.layout.fragment_songs, container, false);
-
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.songRecycleView);
         SongsListAdapter songsListAdapter = new SongsListAdapter(listener);
-        recyclerView.setAdapter(songsListAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        return root;
+        return songsListAdapter;
     }
 }

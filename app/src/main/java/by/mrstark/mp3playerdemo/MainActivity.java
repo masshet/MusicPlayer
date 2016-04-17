@@ -28,8 +28,9 @@ import by.mrstark.mp3playerdemo.util.DataUtil;
  * Created by mrstark on 22.1.16.
  */
 public class MainActivity extends AppCompatActivity implements SongsFragment.OnSongSelectedinterface {
-
-    final String LOG_TAG = "myLogs";
+    public static final String MY_LIBRARY = "my_library";
+    public static final String LISTEN_NOW = "listen_now";
+    public static final String ABOUT = "about";
 
     private ListenNowFragment listenNowFragment;
     private MyLibraryFragment myLibraryFragment;
@@ -49,8 +50,7 @@ public class MainActivity extends AppCompatActivity implements SongsFragment.OnS
         initToolbar();
         initNavigationView();
 
-        AbstractNavigationFragment savedFragment = (AbstractNavigationFragment) manager.findFragmentById(R.id.container);
-        if (savedFragment == null) {
+        if (savedInstanceState == null) {
             loadFragment();
         }
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SongsFragment.OnS
         aboutFragment = AboutFragment.getInstance(this);
         myLibraryFragment = MyLibraryFragment.getInstance(this);
         transaction = manager.beginTransaction();
-        transaction.add(R.id.container, myLibraryFragment);
+        transaction.add(R.id.container, myLibraryFragment, MY_LIBRARY);
         transaction.commit();
     }
 
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements SongsFragment.OnS
         toolbar.inflateMenu(R.menu.menu);
     }
 
-    public void changeFragment(Fragment fragment) {
+    public void changeFragment(Fragment fragment, String tag) {
         transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, fragment);
+        transaction.replace(R.id.container, fragment, tag);
         transaction.commit();
     }
 
@@ -98,15 +98,15 @@ public class MainActivity extends AppCompatActivity implements SongsFragment.OnS
                     switch (item.getItemId()) {
                         case R.id.listen_now_menu_item:
                             toolbar.setTitle(R.string.listen_now);
-                            changeFragment(listenNowFragment);
+                            changeFragment(listenNowFragment, LISTEN_NOW);
                             break;
                         case R.id.my_library_menu_item:
                             toolbar.setTitle(R.string.my_library);
-                            changeFragment(myLibraryFragment);
+                            changeFragment(myLibraryFragment, MY_LIBRARY);
                             break;
                         case R.id.about_menu_item:
                             toolbar.setTitle(R.string.about);
-                            changeFragment(aboutFragment);
+                            changeFragment(aboutFragment, ABOUT);
                             break;
                         default:
                             break;
