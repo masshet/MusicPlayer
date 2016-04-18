@@ -18,6 +18,13 @@ public class Album {
         this.songsList = new ArrayList<>();
     }
 
+    public String getGenre() {
+        if (getSongsList().get(0).getGenre() != null) {
+            return getSongsList().get(0).getGenre();
+        }
+        return "";
+    }
+
     public byte[] getAlbumArt() {
         if (getSongsList().get(0).getAlbumArt() != null) {
             return getSongsList().get(0).getAlbumArt();

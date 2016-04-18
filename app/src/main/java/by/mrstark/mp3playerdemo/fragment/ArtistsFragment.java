@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import by.mrstark.mp3playerdemo.R;
+import by.mrstark.mp3playerdemo.adapter.ArtistsListAdapter;
 
 /**
  * Created by mrstark on 27.1.16.
  */
 public class ArtistsFragment extends AbstractTabFragment {
-
-    private static final int LAYOUT = R.layout.fragment_example;
 
     public static ArtistsFragment getInstance(Context context) {
         ArtistsFragment fragment = new ArtistsFragment();
@@ -30,6 +29,6 @@ public class ArtistsFragment extends AbstractTabFragment {
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return null;
+        return new ArtistsListAdapter();
     }
 }

@@ -2,6 +2,7 @@ package by.mrstark.mp3playerdemo.util;
 
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import by.mrstark.mp3playerdemo.constant.SystemDirectoryList;
 import by.mrstark.mp3playerdemo.entity.Album;
 import by.mrstark.mp3playerdemo.entity.Artist;
+import by.mrstark.mp3playerdemo.entity.Genre;
 import by.mrstark.mp3playerdemo.entity.Song;
 
 /**
@@ -22,6 +24,7 @@ public class DataUtil {
     private List<Song> songs;
     private List<Album> albums;
     private List<Artist> artists;
+    private List<Genre> genres;
     private static DataUtil dataUtil;
 
     public static DataUtil getInstace() {
@@ -34,7 +37,8 @@ public class DataUtil {
     private DataUtil() {
         setSongs(findSongs(Environment.getExternalStorageDirectory()));
         setAlbums();
-//        setArtists();
+        setArtists();
+        setGenres();
     }
 
     public List<Song> getSongs() {
@@ -47,6 +51,34 @@ public class DataUtil {
 
     public List<Artist> getArtists() {
         return artists;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    private void setGenres() {
+        genres = new ArrayList<>();
+        for (Album album : albums) {
+            if (album.getGenre().length() != 0) {
+                if (genres.contains(new Genre(album.getGenre()))) {
+                    for (Genre genre : genres) {
+                        if (genre.getName().equals(album.getGenre())) {
+                            genre.addAlbum(album);
+                        }
+                    }
+                } else {
+                    genres.add(createGenreWithOneAlbum(album));
+                }
+            }
+        }
+    }
+
+    private Genre createGenreWithOneAlbum(Album album) {
+        Genre genre = new Genre(album.getGenre());
+        genre.addAlbum(album);
+        Log.d(LOG_TAG, genre.getName());
+        return genre;
     }
 
     private void setArtists() {
@@ -66,7 +98,6 @@ public class DataUtil {
 
     private Artist createArtistWithOneAlbum(Album album) {
         Artist artist = new Artist(album.getArtist());
-        Log.d(LOG_TAG, album.getArtist());
         artist.addAlbum(album);
         return artist;
     }

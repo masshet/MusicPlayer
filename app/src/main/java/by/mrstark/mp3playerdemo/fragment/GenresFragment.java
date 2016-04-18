@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import by.mrstark.mp3playerdemo.R;
+import by.mrstark.mp3playerdemo.adapter.GenresListAdapter;
 
 /**
  * Created by mrstark on 27.1.16.
  */
 public class GenresFragment extends AbstractTabFragment {
-
-    private static final int LAYOUT = R.layout.fragment_example;
 
     public static GenresFragment getInstance(Context context) {
         GenresFragment fragment = new GenresFragment();
@@ -24,15 +23,9 @@ public class GenresFragment extends AbstractTabFragment {
         return fragment;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(LAYOUT, container, false);
-    }
-
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return null;
+        return new GenresListAdapter();
     }
 
     public void setContext(Context context) {

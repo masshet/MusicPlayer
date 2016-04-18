@@ -53,7 +53,7 @@ public class MyLibraryFragment extends AbstractNavigationFragment {
     }
 
     public void showSongsTab() {
-        viewPager.setCurrentItem(4);
+        viewPager.setCurrentItem(1);
     }
 
 

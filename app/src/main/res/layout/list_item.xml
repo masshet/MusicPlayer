@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -20,7 +21,7 @@
         android:textColor="@android:color/black"
         android:singleLine="true"
         android:textSize="15sp"
-        android:text="2 X 4"/>
+        tool:text="2 X 4"/>
 
     <TextView
         android:layout_marginTop="5dp"
@@ -30,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="10dp"
-        android:text="Metallica"/>
+        android:textSize="10sp"
+        tool:text="Metallica"/>
 
 </RelativeLayout>
