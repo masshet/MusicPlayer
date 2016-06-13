@@ -32,6 +32,10 @@ public class Artist {
         this.albums = albums;
     }
 
+    public String getGenre() {
+        return this.albums.get(0).getGenre();
+    }
+
     public void addAlbum(Album album) {
         albums.add(album);
     }

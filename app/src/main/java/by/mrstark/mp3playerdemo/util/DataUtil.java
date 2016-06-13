@@ -2,7 +2,6 @@ package by.mrstark.mp3playerdemo.util;
 
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class DataUtil {
     private void setAlbums() {
         albums = new ArrayList<>();
         for (Song song : songs) {
-            if (song.getAlbum().length() != 0) {
+            if (song.getAlbum() != null) {
                 if (albums.contains(new Album(song.getArtist(), song.getAlbum()))) {
                     for (Album album : albums) {
                         if (album.getName().equals(song.getAlbum()) && album.getArtist().equals(song.getArtist())) {

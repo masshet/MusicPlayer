@@ -8,14 +8,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import by.mrstark.mp3playerdemo.R;
 import by.mrstark.mp3playerdemo.entity.Album;
+import by.mrstark.mp3playerdemo.fragment.AlbumsFragment;
 import by.mrstark.mp3playerdemo.util.DataUtil;
 
 /**
  * Created by mrstark on 4/17/16.
  */
 public class AlbumsListAdapter extends RecyclerView.Adapter {
+    private final AlbumsFragment.OnAlbumSelectedInterface listener;
+    private List<Album> albums;
+
+    public AlbumsListAdapter(AlbumsFragment.OnAlbumSelectedInterface listener, List<Album> albums) {
+        this.listener = listener;
+        this.albums = albums;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
@@ -29,10 +40,10 @@ public class AlbumsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return DataUtil.getInstace().getAlbums().size();
+        return albums.size();
     }
 
-    private class AlbumListViewHolder extends RecyclerView.ViewHolder {
+    private class AlbumListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView art;
         private TextView title, artist;
@@ -43,11 +54,12 @@ public class AlbumsListAdapter extends RecyclerView.Adapter {
             art = (ImageView) itemView.findViewById(R.id.item_art);
             title = (TextView) itemView.findViewById(R.id.item_title);
             artist = (TextView) itemView.findViewById(R.id.item_artist);
+            itemView.setOnClickListener(this);
         }
 
         public void bindView(int position) {
             index = position;
-            Album album = DataUtil.getInstace().getAlbums().get(position);
+            Album album = albums.get(position);
             if (album.getAlbumArt().length == 0) {
                 art.setImageResource(R.mipmap.ic_launcher);
             } else {
@@ -55,6 +67,11 @@ public class AlbumsListAdapter extends RecyclerView.Adapter {
             }
             title.setText(album.getName());
             artist.setText(album.getArtist());
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onAlbumSelect(albums.get(index).getName());
         }
     }
 }

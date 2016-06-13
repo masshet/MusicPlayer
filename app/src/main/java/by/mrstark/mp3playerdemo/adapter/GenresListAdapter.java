@@ -11,12 +11,19 @@ import android.widget.TextView;
 import by.mrstark.mp3playerdemo.R;
 import by.mrstark.mp3playerdemo.entity.Artist;
 import by.mrstark.mp3playerdemo.entity.Genre;
+import by.mrstark.mp3playerdemo.fragment.GenresFragment;
 import by.mrstark.mp3playerdemo.util.DataUtil;
 
 /**
  * Created by mrstark on 4/18/16.
  */
 public class GenresListAdapter extends RecyclerView.Adapter {
+    private final GenresFragment.OnGenreSelectedInterface listener;
+
+    public GenresListAdapter(GenresFragment.OnGenreSelectedInterface listener) {
+        this.listener = listener;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
@@ -33,7 +40,7 @@ public class GenresListAdapter extends RecyclerView.Adapter {
         return DataUtil.getInstace().getGenres().size();
     }
 
-    private class ArtistListViewHolder extends RecyclerView.ViewHolder {
+    private class ArtistListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView art;
         private TextView title;
@@ -43,6 +50,7 @@ public class GenresListAdapter extends RecyclerView.Adapter {
             super(itemView);
             art = (ImageView) itemView.findViewById(R.id.item_art);
             title = (TextView) itemView.findViewById(R.id.item_title);
+            itemView.setOnClickListener(this);
         }
 
         public void bindView(int position) {
@@ -54,6 +62,11 @@ public class GenresListAdapter extends RecyclerView.Adapter {
                 art.setImageBitmap(BitmapFactory.decodeByteArray(genre.getAlbums().get(0).getAlbumArt(), 0, genre.getAlbums().get(0).getAlbumArt().length));
             }
             title.setText(genre.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onGenreSelect(DataUtil.getInstace().getGenres().get(index).getName());
         }
     }
 }

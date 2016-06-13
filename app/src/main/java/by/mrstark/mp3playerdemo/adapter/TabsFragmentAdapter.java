@@ -53,9 +53,9 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
     private void initTabsMap() {
         map = new HashMap<>();
         map.put(0, PlaylistsFragment.getInstance(context));
-        map.put(4, GenresFragment.getInstance(context));
-        map.put(2, ArtistsFragment.getInstance(context));
-        map.put(3, AlbumsFragment.getInstance(context));
-        map.put(1, SongsFragment.getInstance(context));
+        map.put(4, new GenresFragment().getInstance(context));
+        map.put(2, new ArtistsFragment().getInstance(context));
+        map.put(3, new AlbumsFragment().getInstance(context));
+        map.put(1, new SongsFragment().getInstance(context));
     }
 }

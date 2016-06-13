@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import by.mrstark.mp3playerdemo.R;
 import by.mrstark.mp3playerdemo.entity.Song;
 import by.mrstark.mp3playerdemo.fragment.SongsFragment;
@@ -19,10 +21,12 @@ import by.mrstark.mp3playerdemo.util.DataUtil;
 public class SongsListAdapter extends RecyclerView.Adapter {
 
 
-    private final SongsFragment.OnSongSelectedinterface listener;
+    private final SongsFragment.OnSongSelectedInterface listener;
+    private List<Song> songs;
 
-    public SongsListAdapter(SongsFragment.OnSongSelectedinterface listener) {
+    public SongsListAdapter(SongsFragment.OnSongSelectedInterface listener, List<Song> songs) {
         this.listener = listener;
+        this.songs = songs;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class SongsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return DataUtil.getInstace().getSongs().size();
+        return songs.size();
     }
 
     private class SongListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -57,8 +61,8 @@ public class SongsListAdapter extends RecyclerView.Adapter {
 
         public void bindView(int position) {
             index = position;
-            Song song = DataUtil.getInstace().getSongs().get(position);
-            if (song.getAlbumArt().length == 0) {
+            Song song = songs.get(position);
+            if (song.getAlbumArt() == null) {
                 art.setImageResource(R.mipmap.ic_launcher);
             } else {
                 art.setImageBitmap(BitmapFactory.decodeByteArray(song.getAlbumArt(), 0, song.getAlbumArt().length));
@@ -69,7 +73,7 @@ public class SongsListAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            listener.onListSongSelected(index);
+            listener.onListSongSelected(index, songs);
         }
     }
 }
